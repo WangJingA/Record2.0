@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dayrecords.Dao.UserLoginAndRegisterDao">
+    <insert id="addUser" parameterType="com.example.dayrecords.Bean.RecordUser">
+        insert into record_user (user_name, user_pass, user_mail, user_record,user_login_grant,
+                                 user_login_reslove_time,user_login_update) VALUES
+        (#{userName},#{userPass},#{userMail},#{userRecord},#{userLoginGrant},#{userLoginResolveTime},#{userLoginUpdate})
+    </insert>
+
+    <select id="getUserByLoginInfo" resultType="com.example.dayrecords.Bean.RecordUser">
+        select user_id,user_mail,user_name,user_pass,user_record from record_user
+            where 1=1
+            and
+            user_mail = #{userMail}
+            and
+            user_pass = #{userPass}
+    </select>
+    <select id="searchUser" resultType="com.example.dayrecords.Bean.RecordUser">
+        select * from record_user where  user_mail = #{userMail}
+    </select>
+</mapper>

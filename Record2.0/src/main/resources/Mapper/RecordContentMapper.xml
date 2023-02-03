@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dayrecords.Dao.RecordContentDao">
+    <insert id="addRecord" parameterType="com.example.dayrecords.Bean.RecordContent">
+        insert into record_content (record_id,
+                                    record_user,
+                                    record_type,
+                                    record_content,
+                                    record_family,
+                                    record_weather,
+                                    record_mood,
+                                    record_date,
+                                    record_img,
+                                    record_recomand_img,
+                                    record_title)
+                                    VALUES
+                                    (#{recordUser},
+                                     #{recordType},
+                                     #{recordContent},
+                                     #{recordFamily},
+                                     #{recordWeather},
+                                     #{recordMood},
+                                     #{recordDate},
+                                     #{recordImg},
+                                     #{recordRecommandImg},
+                                     #{recordTitle})
+    </insert>
+    <update id="updateRecord" parameterType="com.example.dayrecords.Bean.RecordContent">
+        update record_content set record_content = #{recordContent},
+                                  record_title = #{recordTitle},
+                                  record_date = #{recordDate},
+                                  record_recommand_img = #{recordRecommandImg},
+                                  record_img = #{recordImg},
+                                  record_mood=#{recordMood},
+                                  record_weather=#{recordWeather},
+                                  record_family=#{recordFamily},
+                                  record_type = #{recordType}
+    </update>
+
+    <select id="getContent" resultType="string">
+        select record_content from record_content where record_user = #{userId} and record_status != 1
+    </select>
+    <select id="getPage" resultType="java.lang.Integer">
+        select count(1) from record_content where record_user = #{recordUser} and record_status != 1
+        and 1=1
+        <choose>
+            <when test="recordType > 0">
+                and record_type = #{recordType}
+            </when>
+        </choose>
+    </select>
+    <select id="getRecordWithPage" resultType="com.example.dayrecords.Bean.RecordContent">
+        select * from record_content where record_user = #{userId} limit #{page},5
+    </select>
+    <select id="getTotalPage" resultType="java.lang.Integer">
+        select count(1) from record_content where record_user = #{userId} and record_status != 1
+    </select>
+    <select id="getRecordById" resultType="java.util.Map">
+        select
+               rc.record_id,
+               rc.record_content,
+               record_weather,
+               record_mood,
+               record_date,
+               record_title,
+               rf.record_family,
+               rf.record_family_font,
+               rri.record_img
+        from
+             record_content rc
+                 left JOIN
+                 record_family rf
+                     on rc.record_family = rf.id
+                 left JOIN record_recommand_img
+                    rri on rc.record_recomand_img = rri.id
+            where rc.record_id = #{recordId}
+    </select>
+
+</mapper>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Record2.0/DayRecord.iml" filepath="$PROJECT_DIR$/Record2.0/DayRecord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Record2.0.iml" filepath="$PROJECT_DIR$/.idea/Record2.0.iml" />
+    </modules>
+  </component>
+</project>
